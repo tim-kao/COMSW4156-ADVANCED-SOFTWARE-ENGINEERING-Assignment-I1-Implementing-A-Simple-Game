@@ -11,4 +11,4 @@ A simple game on REST API
 - app.py\
  REST API for web application
 - Gameboard.py\
-backend function supports two players color selections, balls moving, and judge winner
+A backend function supports two players color selections, balls moving, and judge a winner
