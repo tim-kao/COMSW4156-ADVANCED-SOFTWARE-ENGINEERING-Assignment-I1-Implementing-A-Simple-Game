@@ -24,7 +24,6 @@ Initial Webpage where gameboard is initialized
 def player1_connect():
     global game
     game = Gameboard()
-    game.clean()
     return render_template('player1_connect.html', status="Pick a Color.")
 
 
@@ -120,5 +119,4 @@ def p2_move():
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super secret key'
     app.run(debug=True, host='127.0.0.1')

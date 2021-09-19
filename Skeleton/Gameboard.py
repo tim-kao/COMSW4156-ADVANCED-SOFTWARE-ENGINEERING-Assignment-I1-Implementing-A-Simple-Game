@@ -11,11 +11,8 @@ class Gameboard():
         self.current_turn = 'p1'
         self.emptyRowAtCol = [self.rows - 1] * cols
 
-    def clean(self):
-        self.__init__()
 
-
-    def judge(self, r, c): # check if anyone wins
+    def judge(self, r, c) -> bool: # check if anyone wins
         left = right = c
         board = self.board
         player = board[r][c]
@@ -32,23 +29,22 @@ class Gameboard():
             down += 1
         return down - up >= 3
 
-    def isReady(self):
+    def isReady(self) -> bool:
         return (self.player1 and self.player2), 'Color not selected'
 
-    def isFinish(self):
+    def isFinish(self) -> bool:
         return self.game_result != ""
 
 
-    def switch(self):
+    def switch(self) -> bool:
         self.current_turn = 'p1' if self.current_turn == 'p2' else  'p2'
 
 
-    def move(self, col, player):
+    def move(self, col, player) -> tuple[bool, str]:
         row = self.emptyRowAtCol[col]
         if row == -1:
             return False, 'No space left at this column'
         if self.isFinish():
-            print("ADF")
             return False, 'Game over'
         if player != self.current_turn:
             return False, 'Not your turn'
