@@ -33,6 +33,7 @@ class Gameboard():
     def isReady(self) -> bool:
         return (self.player1 and self.player2), 'Color not selected'
 
+
     def isFinish(self) -> bool:
         return self.game_result != ""
 
@@ -46,10 +47,7 @@ class Gameboard():
 
     def move(self, col, player) -> tuple[bool, str]:
         row = self.emptyRowAtCol[col]
-        if self.remain == 0:
-            self.draw()
-            return True, ''
-        elif row == -1:
+        if row == -1:
             return False, 'No space left at this column'
         elif self.isFinish():
             return False, 'Game over'
@@ -60,6 +58,8 @@ class Gameboard():
         self.board[row][col] = self.player1 if self.current_turn == 'p1' else self.player2
         if self.judge(row, col):
             self.game_result = 'player1' if self.current_turn == 'p1' else 'player2'
+        if self.remain == 0:
+            self.draw()
         self.switch()
         return True, ''
 
