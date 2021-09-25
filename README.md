@@ -14,12 +14,12 @@ A simple game on REST API plus tests
 A backend function supports two players color selections, balls moving, and judge a winner
 
 ### I2
-Added test_Gameboard.py to test Gameboard.py\
-Generated test coverage report\
-Corrected potential issues through flake8\
-Produced bug report by flake8
+- Added test_Gameboard.py to test Gameboard.py
+- Generated test coverage report
+- Corrected potential issues through flake8
+- Produced bug report by flake8
 
-#### [Test coverage resport](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/Skeleton/htmlcov/index.html)
+#### [Test coverage resport](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/blob/i2/Skeleton/htmlcov/index.html)
 Coverage report: 100% Show keyboard shortcuts \
 Module	statements	missing	excluded	coverage\
 Total	128	0	0	100%\
