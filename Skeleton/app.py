@@ -1,13 +1,10 @@
-from flask import Flask, render_template, request, redirect, jsonify
-from json import dump
+from flask import Flask, render_template, request, jsonify
 
-from flask.globals import g, session
 from Gameboard import Gameboard
-import db
-
+import logging
 
 app = Flask(__name__)
-import logging
+
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 global game
@@ -53,7 +50,8 @@ Assign player1 their color
 def player1_config():
     global game
     game.player1 = request.args.get('color')
-    return render_template('player1_connect.html', status="Color picked " + game.player1)
+    return render_template('player1_connect.html',
+                           status="Color picked " + game.player1)
 
 
 '''
@@ -89,15 +87,20 @@ Process Player 1's move
 @app.route('/move1', methods=['POST'])
 def p1_move():
     try:
-        rdy, reasons = game.isReady()
-        if not rdy:
-            return jsonify(move=game.board, invalid=not rdy, reason=reasons,winner=game.game_result)
+        if not game.isReady():
+            return jsonify(move=game.board, invalid=True,
+                           reason='Color not selected',
+                           winner=game.game_result)
         jsonObj = request.get_json()
-        col = int(jsonObj['column'][3:]) - 1 # transform it to 0-index
+        col = int(jsonObj['column'][3:]) - 1  # transform it to 0-index
         valid, reasons = game.move(col, 'p1')
-        return jsonify(move=game.board, invalid=not valid, reason=reasons,winner=game.game_result)
-    except:
-        return jsonify(move=game.board, invalid=True, reason='unexpected error', winner=game.game_result)
+        return jsonify(move=game.board, invalid=not valid,
+                       reason=reasons, winner=game.game_result)
+    except Exception:
+        return jsonify(move=game.board, invalid=True,
+                       reason='unexpected error',
+                       winner=game.game_result)
+
 
 '''
 Same as '/move1' but instead proccess Player 2
@@ -107,15 +110,18 @@ Same as '/move1' but instead proccess Player 2
 @app.route('/move2', methods=['POST'])
 def p2_move():
     try:
-        rdy, reasons = game.isReady()
-        if not rdy:
-            return jsonify(move=game.board, invalid=not rdy, reason=reasons,winner=game.game_result)
+        if not game.isReady():
+            return jsonify(move=game.board, invalid=True,
+                           reason='Color not selected',
+                           winner=game.game_result)
         jsonObj = request.get_json()
-        col = int(jsonObj['column'][3:]) - 1 # transform it to 0-index
+        col = int(jsonObj['column'][3:]) - 1  # transform it to 0-index
         valid, reasons = game.move(col, 'p2')
-        return jsonify(move=game.board, invalid=not valid, reason=reasons,winner=game.game_result)
-    except:
-        return jsonify(move=game.board, invalid=True, reason='unexpected error', winner=game.game_result)
+        return jsonify(move=game.board, invalid=not valid,
+                       reason=reasons, winner=game.game_result)
+    except Exception:
+        return jsonify(move=game.board, invalid=True,
+                       reason='unexpected error', winner=game.game_result)
 
 
 if __name__ == '__main__':

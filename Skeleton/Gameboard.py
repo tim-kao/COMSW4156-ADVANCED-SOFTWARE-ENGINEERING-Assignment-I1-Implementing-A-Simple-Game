@@ -1,4 +1,4 @@
-import db
+
 
 class Gameboard():
     def __init__(self):
@@ -12,8 +12,9 @@ class Gameboard():
         self.emptyRowAtCol = [self.rows - 1] * cols
         self.remain = rows * cols
 
-
-    def judge(self, r, c) -> bool: # check if anyone wins
+    def judge(self, r, c) -> bool:
+        if not self.isReady():
+            return False
         left = right = c
         board = self.board
         player = board[r][c]
@@ -23,27 +24,24 @@ class Gameboard():
             right += 1
         if right - left >= 3:
             return True
-        up = down = r
-        while up - 1 >= 0 and board[up - 1][c] == player:
-            up -= 1
+        down = r
         while down + 1 < self.rows and board[down + 1][c] == player:
             down += 1
-        return down - up >= 3
+        return down - r >= 3
 
-    def isReady(self) -> bool:
-        return (self.player1 and self.player2), 'Color not selected'
-
+    def isReady(self) -> tuple[bool, str]:
+        lis = ['red', 'yellow']
+        return self.player1 in lis and self.player2 in lis and\
+            self.player1 != self.player2
 
     def isFinish(self) -> bool:
         return self.game_result != ""
 
-
-    def switch(self) -> bool:
-        self.current_turn = 'p1' if self.current_turn == 'p2' else  'p2'
+    def switch(self):
+        self.current_turn = 'p1' if self.current_turn == 'p2' else 'p2'
 
     def draw(self):
         self.game_result = 'Tie'
-
 
     def move(self, col, player) -> tuple[bool, str]:
         row = self.emptyRowAtCol[col]
@@ -54,19 +52,17 @@ class Gameboard():
         elif player != self.current_turn:
             return False, 'Not your turn'
         self.remain -= 1
-        self.emptyRowAtCol[col] -= 1 # decrease row
-        self.board[row][col] = self.player1 if self.current_turn == 'p1' else self.player2
+        self.emptyRowAtCol[col] -= 1  # decrease row
+        if self.current_turn == 'p1':
+            self.board[row][col] = self.player1
+        else:
+            self.board[row][col] = self.player2
         if self.judge(row, col):
-            self.game_result = 'player1' if self.current_turn == 'p1' else 'player2'
+            if self.current_turn == 'p1':
+                self.game_result = 'player1'
+            else:
+                self.game_result = 'player2'
         if self.remain == 0:
             self.draw()
         self.switch()
         return True, ''
-
-
-'''
-Add Helper functions as needed to handle moves and update board and turns
-'''
-
-
-    
