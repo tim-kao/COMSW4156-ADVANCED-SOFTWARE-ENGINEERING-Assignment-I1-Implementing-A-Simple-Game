@@ -20,7 +20,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(self.game.isReady(), True)
 
     def test_init_isFinish(self):
-        # Check game initialization if game is finish or not
+        # Check game initialization if game is finih or not
         self.assertEqual(self.game.isFinish(), False)
 
     def test_switch(self):
