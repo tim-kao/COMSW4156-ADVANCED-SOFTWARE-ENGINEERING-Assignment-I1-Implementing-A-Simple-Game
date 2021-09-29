@@ -98,12 +98,12 @@ class TestStringMethods(unittest.TestCase):
         # Happy path for winning move in each of diagonal positive slope
         self.game.player1, self.game.player2 = 'red', 'yellow'
         t = (True, '')
-        for i in range(22):
+        for i, c in enumerate([0, 1, 2, 2, 2, 3, 3, 3, 3, 5, 1]):
             if i % 2 == 0:
-                self.assertEqual(self.game.move(i % self.game.cols, 'p1'), t)
+                self.assertEqual(self.game.move(c, 'p1'), t)
             else:
-                self.assertEqual(self.game.move(i % self.game.cols, 'p2'), t)
-        self.assertEqual(self.game.game_result, 'player2')
+                self.assertEqual(self.game.move(c, 'p2'), t)
+        self.assertEqual(self.game.game_result, 'player1')
         self.assertEqual(self.game.isFinish(), True)
 
     def test_game_diagonal_neg(self):

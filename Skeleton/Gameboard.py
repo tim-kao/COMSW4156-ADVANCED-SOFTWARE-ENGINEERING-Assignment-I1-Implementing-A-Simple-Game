@@ -30,20 +30,30 @@ class Gameboard():
         if down - r >= 3:
             return True
         # diagonal, left-down
-        left, down = c, r
+        left = right = c
+        up = down = r
         while left - 1 >= 0 and down + 1 < self.rows and \
                 board[down + 1][left - 1] == player:
             left -= 1
             down += 1
-        if down - r >= 3:
+        while right + 1 < self.cols and up - 1 >= 0 and \
+                board[up - 1][right + 1] == player:
+            right += 1
+            up -= 1
+        if right - left >= 3:
             return True
         # diagonal, right-down
-        right, down = c, r
+        left = right = c
+        up = down = r
         while right + 1 < self.cols and down + 1 < self.rows and \
                 board[down + 1][right + 1] == player:
             right += 1
             down += 1
-        return down - r >= 3
+        while left - 1 >= 0 and up - 1 >= 0 and \
+                board[up - 1][left - 1] == player:
+            left -= 1
+            up -= 1
+        return right - left >= 3
 
     def isReady(self) -> tuple[bool, str]:
         lis = ['red', 'yellow']
