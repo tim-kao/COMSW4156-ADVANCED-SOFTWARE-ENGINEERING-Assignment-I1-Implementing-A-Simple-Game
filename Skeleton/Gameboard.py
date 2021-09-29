@@ -1,5 +1,3 @@
-
-
 class Gameboard():
     def __init__(self):
         self.player1 = ""
@@ -18,14 +16,32 @@ class Gameboard():
         left = right = c
         board = self.board
         player = board[r][c]
+        # horizontal
         while left - 1 >= 0 and board[r][left - 1] == player:
             left -= 1
         while right + 1 < self.cols and board[r][right + 1] == player:
             right += 1
         if right - left >= 3:
             return True
+        # vertical
         down = r
         while down + 1 < self.rows and board[down + 1][c] == player:
+            down += 1
+        if down - r >= 3:
+            return True
+        # diagonal, left-down
+        left, down = c, r
+        while left - 1 >= 0 and down + 1 < self.rows and \
+                board[down + 1][left - 1] == player:
+            left -= 1
+            down += 1
+        if down - r >= 3:
+            return True
+        # diagonal, right-down
+        right, down = c, r
+        while right + 1 < self.cols and down + 1 < self.rows and \
+                board[down + 1][right + 1] == player:
+            right += 1
             down += 1
         return down - r >= 3
 
