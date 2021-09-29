@@ -21,10 +21,10 @@ A backend function supports two players color selections, balls moving, and judg
 
 #### [Test coverage resport](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/blob/assignment2/Skeleton/htmlcov/index.html)
 Coverage report: 99% Show keyboard shortcuts \
-Module	statements	missing	excluded	coverage\
-Total	166	1	0	99%\
-Gameboard.py	69	0	0	100%\
-test_Gameboard.py	97	1	0	99%\
-coverage.py v5.5, created at 2021-09-28 23:02 -0400
+Module	statements	missing	excluded	branches	partial	coverage\
+Total	174	1	0	68	1	99%\
+Gameboard.py	77	0	0	38	0	100%\
+test_Gameboard.py	97	1	0	30	1	98%\
+coverage.py v5.5, created at 2021-09-28 23:22 -0400
 
 #### [Bug report](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/blob/assignment2/Skeleton/bugs.txt)
