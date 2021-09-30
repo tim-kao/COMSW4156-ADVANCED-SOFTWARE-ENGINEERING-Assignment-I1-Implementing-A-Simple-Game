@@ -135,4 +135,3 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(
             self.game.move(0, 'p1'), (False, 'No space left at this column'))
         self.assertEqual(self.game.isFinish(), True)
-
