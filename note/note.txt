@@ -6,3 +6,11 @@ coverage report -m
 
 # generate html report
 coverage html
+
+# git
+git branch assignment3
+git checkout -b asisgnment3
+Switched to a new branch 'asisgnment3'
+git add *
+git commit
+git push
