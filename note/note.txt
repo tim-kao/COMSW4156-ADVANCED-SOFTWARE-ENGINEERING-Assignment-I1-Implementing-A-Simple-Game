@@ -1,0 +1,8 @@
+# run all tests
+coverage run -m unittest discover
+
+# generate coverage report
+coverage report -m    
+
+# generate html report
+coverage html

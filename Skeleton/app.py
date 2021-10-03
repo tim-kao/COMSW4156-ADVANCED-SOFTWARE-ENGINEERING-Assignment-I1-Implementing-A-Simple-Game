@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-
+import db
 from Gameboard import Gameboard
 import logging
 
@@ -9,6 +9,7 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 global game
 game = None
+
 '''
 Implement '/' endpoint
 Method Type: GET
@@ -21,6 +22,9 @@ Initial Webpage where gameboard is initialized
 def player1_connect():
     global game
     game = Gameboard()
+    # clear and reset database
+    db.clear()
+    db.init_db()
     return render_template('player1_connect.html', status="Pick a Color.")
 
 
@@ -49,7 +53,13 @@ Assign player1 their color
 @app.route('/p1Color/', methods=['GET'])
 def player1_config():
     global game
-    game.player1 = request.args.get('color')
+    recover = db.getMove()
+    if recover:
+        game.current_turn, game.board, game.game_result, game.player1, \
+            game.player2, game.remain = recover[0], list(recover[1:7]), \
+            recover[7], recover[8], recover[9], int(recover[10])
+    else:
+        game.player1 = request.args.get('color')
     return render_template('player1_connect.html',
                            status="Color picked " + game.player1)
 
@@ -66,10 +76,17 @@ Assign player2 their color
 
 @app.route('/p2Join', methods=['GET'])
 def p2Join():
-    res = "Error"
-    if game.player1 and game.player1 in ['red', 'yellow']:
-        res = game.player2 = 'yellow' if game.player1 == 'red' else 'red'
-    return render_template('p2Join.html', status=res)
+    color = "Error"
+    recover = db.getMove()
+    if recover:
+        game.current_turn, game.board, game.game_result, game.player1, \
+            game.player2, game.remain = recover[0], list(recover[1:7]), \
+            recover[7], recover[8], recover[9], int(recover[10])
+        color = game.player2
+    else:
+        if game.player1 and game.player1 in ['red', 'yellow']:
+            color = game.player2 = 'yellow' if game.player1 == 'red' else 'red'
+    return render_template('p2Join.html', status=color)
 
 
 '''
@@ -94,6 +111,10 @@ def p1_move():
         jsonObj = request.get_json()
         col = int(jsonObj['column'][3:]) - 1  # transform it to 0-index
         valid, reasons = game.move(col, 'p1')
+        if valid:
+            move = tuple([game.current_turn] + game.board + [game.game_result,
+                         game.player1, game.player2, game.remain])
+            db.add_move(move)
         return jsonify(move=game.board, invalid=not valid,
                        reason=reasons, winner=game.game_result)
     except Exception:
@@ -117,6 +138,10 @@ def p2_move():
         jsonObj = request.get_json()
         col = int(jsonObj['column'][3:]) - 1  # transform it to 0-index
         valid, reasons = game.move(col, 'p2')
+        if valid:
+            move = tuple([game.current_turn] + game.board + [game.game_result,
+                         game.player1, game.player2, game.remain])
+            db.add_move(move)
         return jsonify(move=game.board, invalid=not valid,
                        reason=reasons, winner=game.game_result)
     except Exception:

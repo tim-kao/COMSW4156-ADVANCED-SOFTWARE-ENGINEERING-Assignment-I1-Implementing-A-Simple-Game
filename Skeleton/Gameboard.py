@@ -7,7 +7,6 @@ class Gameboard():
         self.board = [['' for x in range(cols)] for y in range(rows)]
         self.game_result = ""
         self.current_turn = 'p1'
-        self.emptyRowAtCol = [self.rows - 1] * cols
         self.remain = rows * cols
 
     def judge(self, r, c) -> bool:
@@ -69,8 +68,14 @@ class Gameboard():
     def draw(self):
         self.game_result = 'Tie'
 
+    def getRow(self, col):
+        r = -1
+        while r + 1 < self.rows and not self.board[r + 1][col]:
+            r += 1
+        return r
+
     def move(self, col, player) -> tuple[bool, str]:
-        row = self.emptyRowAtCol[col]
+        row = self.getRow(col)
         if row == -1:
             return False, 'No space left at this column'
         elif self.isFinish():
@@ -78,7 +83,6 @@ class Gameboard():
         elif player != self.current_turn:
             return False, 'Not your turn'
         self.remain -= 1
-        self.emptyRowAtCol[col] -= 1  # decrease row
         if self.current_turn == 'p1':
             self.board[row][col] = self.player1
         else:
