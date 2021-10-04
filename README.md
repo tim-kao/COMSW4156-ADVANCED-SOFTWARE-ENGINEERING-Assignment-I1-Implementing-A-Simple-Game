@@ -4,7 +4,7 @@ Assignment 3 - individual project for Fall 2021 by **Shuoting Kao (UNI: sk4920)*
 ## Overview ##
 A simple game on REST API plus tests
 
-## Demo[Watch the video](https://youtu.be/V-TPNGS4GOQ)
+## Demo[Watch the video](https://youtu.be/PhitH4dNzHw)
 ## Demo[Download Video file](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/blob/asisgnment3/demo/demo_sk4920.mov)
 
 ### Assignment 3
