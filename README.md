@@ -19,8 +19,10 @@ A simple game on REST API plus tests
 Name                Stmts   Miss  Cover   Missing\
 -------------------------------------------------\
 Gameboard.py           80      0   100%\
+db.py                  61      5    92%   19-20, 58-59, 81\
 test_Gameboard.py      95      0   100%\
+test_db.py             30      0   100%\
 -------------------------------------------------\
-TOTAL                 175      0   100%
+TOTAL                 266      5    98%
 
 #### [Bug report](https://github.com/tim-kao/COMSW4156-ADVANCED-SOFTWARE-ENGINEERING-Assignment-I1-Implementing-A-Simple-Game/blob/asisgnment3/Skeleton/bugs.txt)
